@@ -10,7 +10,7 @@
     $userId = $_SESSION["_id"];
 
     if(isset($itemId)) {
-        $collection->deleteOne([['_id' =>new MongoDB\BSON\ObjectID($itemId)], ['limit' =>1]]);
+        $collection->deleteOne(['item' => $itemId, 'user' => $userId]);
     } else {
         echo 2;
     }
