@@ -96,6 +96,42 @@
 		
 		
 		<!-- Modal -->
+		<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Σχόλιο</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="addReview.php" method="POST">
+							<!-- <div class="form-group">
+								<input type="email" class="form-control" id="logemail"  name="logemail" aria-describedby="emailHelp" placeholder="Email">	
+							</div> -->
+							<!-- <div class="form-group">
+								<input type="password" minlength="6" class="form-control" name="logpass" id="logpass" placeholder="Συνθηματικό">
+							</div>  -->
+							<div class="form-group">
+    							<label for="reviewTextArea">Πείτε μας την γνώμη σας!</label>
+    							<input type="text" class="form-control" id="revTextArea" name="revTextArea" required>
+  							</div> 
+							<div class="text-center ">
+								<button type="submit" id="review" class="btn btn-block text-white" value="Review" style="background-color: #ff9900;">Σχολιάστε</button>								
+							</div>	
+						</form>
+					</div>
+					
+					<!-- <div class="d-flex justify-content-center">	
+						<div class="modal-footer" >									
+							<p>Νέος χρήστης; <a href="" data-toggle="modal" data-target="#exampleModal2" data-dismiss="modal">Γίνε μέλος</a></p>	
+						</div>
+					</div>	 -->
+				</div>	
+			</div>
+		</div> 
+
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -200,7 +236,7 @@
 			}
 		</style>
 
-		<div class="container mt-5 ">
+		<div class="container mt-5">
 			<div class="row">
 			<?php
 				$cursor = $collection->find();
@@ -210,7 +246,15 @@
 					echo '				<div class="card-body">';
 					echo '					<img class="item-img" src="'.$items['img-url'].'" width="210" height="210">';
 					if(isset($_SESSION['loggedin'])) {
-					echo '					<button onclick="addtofav(\''.$items['_id'].'\')" type="submit" name="submit" id="favoriteBtn" value="Favorites" class="btn btn-danger mt-2"><i class="bi bi-heart"></i></button>';
+						echo '<button onclick="addtofav(\''.$items['_id'].'\')" type="submit" name="submit" id="favoriteBtn" value="Favorites" class="btn btn-danger mt-2"><i class="bi bi-heart"></i></button>';
+					}
+					$ccollection = $db->cart;
+					$ccursor = $ccollection->find();
+
+					foreach($ccursor as $review){
+						if($items['_id'] == $review['item'] and $review['review'] == "1" and isset($_SESSION['loggedin']) and $review['user'] == $_SESSION["_id"] ){
+							echo '<button onclick="addReview(\''.$items['_id'].'\')" id="reviewBtn" value="Review" class="btn btn-warning mt-2 ml-1"><i class="bi bi-chat"></i></button>';		
+						}
 					}
 					echo '					<br/><br/>';
 					echo '					<h5 class="card-title item-name" id="itemName">'.$items['name'].'</h5>';
@@ -228,6 +272,7 @@
 					echo '			</div>';
 					echo '		</div>';
 				}
+	
 			?>
 
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -268,7 +313,37 @@
 
 					
 						});
-				}	
+				}
+				
+				function addReview(id) {
+					var itemId = id;
+					// window.location.href = "teck.php?item='itemId'";
+					// var review = document.getElementById("revTextArea").val;
+					// var reviewBtn = document.getElementById("review").onclick = function(){
+					// 	rev()
+					// };
+					// function rev(){
+					// 	// console.log("item:"+itemId);
+					// 	// console.log("review:"+review);
+					// 	// alert("item:"+itemId);
+					// 	// alert("review:" +review);
+					// }
+					$.ajax({
+							method: "POST",
+							url: "addReview.php",
+							data: {
+								itemId
+							},
+							success: function(data) {
+								alert('Success!');
+							},
+							error: function(xhr, status, error) {
+								condole.error(xhr);
+							}					
+						});
+						
+					
+				}
 			</script>	
 
 			</div>

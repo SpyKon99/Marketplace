@@ -183,30 +183,77 @@
 			</div>
 		</div>
 			
-		<?php
+		<div class="container m-5">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<!-- <li class="nav-item">
+					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+				</li> -->
+				<li class="nav-item">
+					<a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Προφίλ</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Ιστορικό Παραγγελιών</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+ 				<!-- <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div> -->
+  				<div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+					<?php
+					require 'vendor/autoload.php';
+					$m = new MongoDB\Client("mongodb://127.0.0.1/");
+					//echo "Connected succesfully<br><br>";
+					//Select-Create a database
+					$db = $m->mydb;
+					//echo "Database selected succesfully<br><br>";
+					//Select a collection
+					$collection = $db->users;
+					//echo "Collection selected succesfully<br><br>";
+					echo '<div class="card mt-5" style="width: 18rem; margin-left:25%; white-space: nowrap;">';
+					echo '  <div class="card-header">Προφίλ <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal">Επεξεργασία</button></div>';
+					echo '  <ul class="list-group list-group-flush">';
+					echo '    <li class="list-group-item">Id:&nbsp;'.$_SESSION["_id"] .'</li>';
+					echo '    <li class="list-group-item">Όνομα:&nbsp;'.$_SESSION["fname"] .'</li>';
+					echo '    <li class="list-group-item">Επίθετο:&nbsp;'. $_SESSION["sname"] .'</li>';
+					echo '    <li class="list-group-item">Email:&nbsp;'.$_SESSION["email"].'</li>';
+					echo '    <li class="list-group-item">Τηλέφωνο:&nbsp;'.$_SESSION["tel"] .'</li>';
+					echo '    <li class="list-group-item">Κωδικός:&nbsp;'. $_SESSION["password"] .'</li>';
+					echo '  </ul>';
+					echo '</div>';
+					?>
+				</div>
+ 				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+					<?php
+					$m = new MongoDB\Client("mongodb://127.0.0.1/");
+					$db = $m->mydb;
 
-			require 'vendor/autoload.php';
-			$m = new MongoDB\Client("mongodb://127.0.0.1/");
-			//echo "Connected succesfully<br><br>";
-			//Select-Create a database
-			$db = $m->mydb;
-			//echo "Database selected succesfully<br><br>";
-			//Select a collection
-			$collection = $db->users;
-			//echo "Collection selected succesfully<br><br>";\
+					$collection = $db->cart;
+					$ccollection = $db->items;
 
-			echo '<div class="card mt-5" style="width: 18rem; margin-left:25%; white-space: nowrap;">';
-			echo '  <div class="card-header">Προφίλ <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal">Επεξεργασία</button></div>';
-			echo '  <ul class="list-group list-group-flush">';
-			echo '    <li class="list-group-item">Id:&nbsp;'.$_SESSION["_id"] .'</li>';
-			echo '    <li class="list-group-item">Όνομα:&nbsp;'.$_SESSION["fname"] .'</li>';
-			echo '    <li class="list-group-item">Επίθετο:&nbsp;'. $_SESSION["sname"] .'</li>';
-			echo '    <li class="list-group-item">Email:&nbsp;'.$_SESSION["email"].'</li>';
-			echo '    <li class="list-group-item">Τηλέφωνο:&nbsp;'.$_SESSION["tel"] .'</li>';
-			echo '    <li class="list-group-item">Κωδικός:&nbsp;'. $_SESSION["password"] .'</li>';
-			echo '  </ul>';
-			echo '</div>';
-		?>
+					$cursor = $collection->find();
+					foreach ($cursor as $document){
+						if ($document['user'] == $_SESSION["_id"]) {
+							$ccursor = $ccollection->find();
+							foreach ($ccursor as $ddocument){
+								if($document['item'] == $ddocument['_id'] and $document['review'] == "1"){		
+									echo'<div class="row cart-row" style="margin-top:25px" >
+											<div class="col"><img src="'.$ddocument['img-url'].'" style="width:50px;"/></div>
+											<div class="col"><p id="test1">'.$ddocument['name'].'</p></div>
+											
+											<div class="col"><p id="timi">'.$ddocument['price'].'€</p></div>
+										</div>';										                    
+								}
+							}
+						}  
+					}
+					// echo'<div class="text-center mt-5" id="sinolo" >
+					// 		<p class="cart-total-price"><u>Σύνολο:</u></p>
+					// 	</div>';   
+					?>
+				</div>
+			</div>
+		</div>
+		
+
 
 	<br/><br/><br/><br/><br/>
 	<footer class="text-center text-lg-start bg-light text-muted">

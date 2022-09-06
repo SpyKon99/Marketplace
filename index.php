@@ -158,13 +158,13 @@
 			</ol>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<a href="https://www.skroutz.gr/c/4561/athlitikos-exoplismos-endysi.html" target="_blanc"><img class="d-block w-60" src="1.png" alt="First slide"></a>
+					<a href="https://a.scdn.gr/ds/generic_posts/images/15/20220701140811_timeline_andrikes_sagionares.jpg" target="_blanc"><img class="d-block w-60" src="images/1.png" alt="First slide"></a>
 				</div>
 				<div class="carousel-item">
-					<a href="https://www.skroutz.gr/c/2680/forita-icheia.html?ecommerce_available=1" target="_blanc"><img class="d-block w-60" src="2.png" alt="Second slide"></a>
+					<a href="https://www.skroutz.gr/c/2680/forita-icheia.html?ecommerce_available=1" target="_blanc"><img class="d-block w-60" src="images/2.png" alt="Second slide"></a>
 				</div>
 				<div class="carousel-item">
-					<a href="https://www.skroutz.gr/c/1798/drones.html" target="_blanc"><img class="d-block w-60" src="3.png" alt="Third slide"></a>
+					<a href="https://www.skroutz.gr/c/1798/drones.html" target="_blanc"><img class="d-block w-60" src="images/3.png" alt="Third slide"></a>
 				</div>
 			</div>
 			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

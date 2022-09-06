@@ -166,7 +166,7 @@
 				<div class="col"><p id="test1"><u>Τίτλος</u></p></div>
 				<div class="col"><p id="test1"><u>Ποσότητα</u></p></div>
 				<div class="col"><p id="test1"><u>Τιμή</u></p></div>
-			
+				<div class="col"><p id="test1"><u></u></p></div>			
 			</div>
 		<?php
             $m = new MongoDB\Client("mongodb://127.0.0.1/");
@@ -180,12 +180,13 @@
                 if ($document['user'] == $_SESSION["_id"]) {
                     $ccursor = $ccollection->find();
                     foreach ($ccursor as $ddocument){
-                        if($document['item'] == $ddocument['_id']){		
+                        if($document['item'] == $ddocument['_id'] and $document['review'] == 0){		
 							echo'<div class="row cart-row" style="margin-top:25px" >
 									<div class="col"><img src="'.$ddocument['img-url'].'" style="width:50px;"/></div>
 									<div class="col"><p id="test1">'.$ddocument['name'].'</p></div>
 									<div class="col"><input type="number" class="quantity" name="quantity" min="1" max="5" value="1"/></div>
-									<div class="col"><p id="timi">'.$ddocument['price'].'€</p></div>				
+									<div class="col"><p id="timi">'.$ddocument['price'].'€</p></div>
+									<div class="col"><button  onclick="removeCart(\''.$ddocument['_id'].'\')" class="btn btn-danger" style="border:none;"><i class="bi bi-trash"></i></button></div>
 								</div>';										                    
                         }
                     }
@@ -195,6 +196,27 @@
 			// 		<p class="cart-total-price"><u>Σύνολο:</u></p>
 			// 	</div>';   
         ?>		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+			<script>
+				function removeCart(id) {
+					var itemId = id;
+					$.ajax({
+							method: "POST",
+							url: "removeFromCart.php",
+							data: {
+								itemId
+							},
+							success: function(data) {
+								alert('Αφαιρέθηκε από το καλάθι');
+							},
+							error: function(xhr, status, error) {
+								condole.error(xhr);
+							}
+
+					
+						});
+				}	
+			</script>	
 		<div class="text-center mt-5">
 			<button type="button" onclick="next()" id="next" class="btn  btn-block text-white  mt-5 nextBtn" value="Next" style="background-color: #ff9900; width:90%;" >Επόμενο</button>								
 		</div>
@@ -225,6 +247,20 @@
 		function final() {
 			var finish = document.getElementById("pay").style.display="none";
 			alert("Η αγορά σας ολολήρώθηκε!");
+			$.ajax({
+						method: "POST",
+						url: "updateReview.php",
+						// data: {
+						// 	itemId
+						// },
+						success: function(data) {
+							alert('Μπορείτε να σχολιάσετε το/τα προιον/προιοντα!');
+						},
+						error: function(xhr, status, error) {
+							condole.error(xhr);
+						}
+					});
+			window.location.href = "index.php";
 		}
     </script>    
 	<br/><br/><br/><br/><br/>

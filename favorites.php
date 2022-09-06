@@ -203,7 +203,7 @@
 								itemId
 							},
 							success: function(data) {
-								alert('Αφαιρέθηκε από το καλάθι');
+								alert('Αφαιρέθηκε από τα αγαπημένα');
 							},
 							error: function(xhr, status, error) {
 								condole.error(xhr);
