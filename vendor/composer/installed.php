@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '77d61cf8f944fad1addf811d5b399124b7ac213b',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '77d61cf8f944fad1addf811d5b399124b7ac213b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -38,9 +38,9 @@
             'dev_requirement' => false,
         ),
         'mongodb/mongodb' => array(
-            'pretty_version' => '1.8.0',
-            'version' => '1.8.0.0',
-            'reference' => '953dbc19443aa9314c44b7217a16873347e6840d',
+            'pretty_version' => '1.12.0',
+            'version' => '1.12.0.0',
+            'reference' => 'e4a7594ac4b31635fa77455c4038a7013024ba28',
             'type' => 'library',
             'install_path' => __DIR__ . '/../mongodb/mongodb',
             'aliases' => array(),

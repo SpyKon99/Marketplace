@@ -22,63 +22,11 @@
 	</head>
 	
 	<body class="bg-light">
-		<!-- example 6 - center on mobile -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    
-			<div class="collapse navbar-collapse text-right" id="myNavbar">
-            <h1 class="mt-4 ml-5" style="font-family: fantasy; "><a href="admin.php" style="text-decoration: none; color:#ff9900;">Marketplace</a></h1>
-
-				<ul class="navbar-nav ml-auto flex-nowrap mt-4 mr-5">
-					<?php
-						if(isset($_SESSION['loggedin'])) {
-                            echo '<li class="nav-item"><a href="items.php" class="nav-link menu-item border-right mr-2"><i class="bi bi-phone"></i> Προϊοντα </a></li>';
-                            echo '<li class="nav-item"><a href="users.php" class="nav-link menu-item border-right mr-2"><i class="bi bi-person"></i> Χρήστες</a></li>';
-                            echo '<li class="nav-item"><a href="invoices.php" class="nav-link menu-item border-right mr-2"><i class="bi bi-receipt"></i> Παραγγελίες</a></li>';                                        
-                            echo '<li class="nav-item"><a href="adminlogout.php" class="nav-link menu-item border-right mr-2"><i class="bi bi-door-closed"></i> Αποσύνδεση</a></li>';
-                        }else {
-							echo '<li class="nav-item"><a class="nav-link menu-item border-right mr-2" data-toggle="modal" data-target="#exampleModal" ><i class="bi bi-door-open"></i> Σύνδεση</a></li>';
-						}		
-					?>
-				</ul>
-			</div>
-		</nav>
 		
+		<?php include_once('adminNavbar2.php')?>
 		
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Σύνδεση</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<form action="login.php" method="POST">
-							<div class="form-group">								
-								<input type="email" class="form-control" id="logemail"  name="logemail" aria-describedby="emailHelp" placeholder="Email">	
-							</div>
-							<div class="form-group">
-								<input type="password" minlength="6" class="form-control" name="logpass" id="logpass" placeholder="Συνθηματικό">
-							</div>
-							<div class="form-group">
-								<a href="" class="text-dark">Έχω ξεχάσει το συνθηματικό μου</a>
-							</div>
-							<div class="text-center ">
-								<button type="submit" name="submit" id="submit" class="btn  btn-block text-white"  value="Login" style="background-color: #ff9900;">Login</button>								
-							</div>	
-						</form>
-					</div>
-					
-					<div class="d-flex justify-content-center">	
-						<div class="modal-footer" >									
-							<p>Νέος χρήστης; <a href="" data-toggle="modal" data-target="#exampleModal2" data-dismiss="modal">Γίνε μέλος</a></p>	
-						</div>
-					</div>	
-				</div>	
-			</div>
-		</div>
+		<div class="d-flex justify-content-center"><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#createUserModal" style="border:none;"><i class="bi bi-plus"></i></button></div>
+		<br/>
 		
         <div class="modal-body cart-items" id="cart" style="margin-left:100px">
 			<div class="row row-title" style="font-size:25px;">
@@ -88,6 +36,8 @@
                 <div class="col"><p id="test1"><u>Email</u></p></div>
 				<div class="col"><p id="test1"><u>Τηλέφωνο</u></p></div>
                 <div class="col"><p id="test1"><u>Κωδικός</u></p></div>
+				<div class="col"><p id="test1"><u>Επεξεργασια</u></p></div>	
+				<div class="col"><p id="test1"><u>Διαγραφη</u></p></div>
 			</div>
 		<?php
             $m = new MongoDB\Client("mongodb://127.0.0.1/");
@@ -104,15 +54,27 @@
                         <div class="col"><p id="test1">'.$document['email'].'</p></div>
                         <div class="col"><p id="test1">'.$document['tel'].'</p></div>
 			            <div class="col"><p id="test1">'.$document['password'].'</p></div>	
+						<div class="col"><p id="test1"><button onclick="editUser(\''.$document['_id'].'\')" class="btn btn-warning" style="border:none;"><i class="bi bi-pencil"></i></button></p></div>
+						<div class="col"><p id="test1"><button onclick="deleteUser(\''.$document['_id'].'\')" class="btn btn-danger" style="border:none;"><i class="bi bi-trash"></i></button></p></div>	
 					</div>';										                    
             }
-                
-			// echo'<div class="text-center mt-5" id="sinolo" >
-			// 		<p class="cart-total-price"><u>Σύνολο:</u></p>
-			// 	</div>';   
+                  
         ?>	
   
 	</div>
+	<script>
+		function deleteUser(id){
+			var itemid = id;
+			// alert("Hey "+itemid);
+			window.location.href = "deleteUser.php?id=" + itemid;
+		}
+		function editUser(id){
+			var itemid = id;
+
+			// alert("Hey "+itemid);
+			window.location.href = "editUser.php?id=" + itemid;
+		}
+	</script>
 
    
 
