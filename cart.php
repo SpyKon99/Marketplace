@@ -119,7 +119,7 @@
 			alert("Η αγορά σας ολολήρώθηκε!");
 			$.ajax({
 						method: "POST",
-						url: "updateReview.php",
+						url: "review.php",
 						// data: {
 						// 	itemId
 						// },

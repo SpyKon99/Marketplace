@@ -137,7 +137,11 @@ const utterances = [
 ];
 
 // Possible responses corresponding to triggers
-// const teck = window.location.href = "http://localhost/Marketplace/teck.php ";
+const teck = `<a href="http://localhost/Marketplace/teck.php">here</a>`
+const aboutus = `<a href=" http://localhost/Marketplace/aboutus.php ">here</a>`
+const stores = `<a href="http://localhost/Marketplace/stores.php ">here</a>`
+const favorites = `<a href="http://localhost/Marketplace/favorites.php ">here</a>`
+const profile = `<a href="http://localhost/Marketplace/profil.php ">here</a>`
 
 const answers = [
   [
@@ -147,19 +151,19 @@ const answers = [
     "you can send us an email at unipi@unipi.gr or you can call us at 210 4142000"
   ],
   [
-    "in the following link: http://localhost/Marketplace/teck.php"
+    "you can find them "+teck
   ],
   [
-    "you can find us in the following link: http://localhost/Marketplace/aboutus.php"
+    "you can find more information "+aboutus
   ],
   [
-    "you can find them in the following link: http://localhost/Marketplace/stores.php"
+    "you can find them "+stores
   ],
   [
-  "you have to login and then you can find them in the following link: http://localhost/Marketplace/favorites.php"
+  "you have to login and then you can find them "+favorites
   ],
   [
-  "you can find them in the following link: http://localhost/Marketplace/profil.php"
+  "you have to login and then you can find them "+profile
   ],
 ];
 
@@ -226,10 +230,11 @@ function addChatEntry(input, product) {
   messagesContainer.appendChild(userDiv);
 
   let botDiv = document.createElement("div");
-  let botText = document.createElement("span");
+  let botText = document.createElement("div");
   botDiv.id = "bot";
   botDiv.className = "bot response";
-  botText.innerText = "Typing...";
+  botText.innerHTML = "<span>Typing...</span>";
+  console.log(botText);
   botDiv.appendChild(botText);
   messagesContainer.appendChild(botDiv);
 
@@ -237,7 +242,7 @@ function addChatEntry(input, product) {
     messagesContainer.scrollHeight - messagesContainer.clientHeight;
 
   setTimeout(() => {
-    botText.innerText = `${product}`;
+    botText.innerHTML = `${product}`;
   }, 2000);
 }
 

@@ -105,7 +105,11 @@
 						echo $store["availability"]." ";
 						echo "<br>";
 					}
-					echo '<button onclick="addToCart(\''.$items['_id'].'\')" type="button" name="cart" id="cart" class="btn btn-block text-white mt-3 cartBtn" value="cart" style="background-color: #ff9900;">Προσθήκη στο καλάθι</button>	';
+					if(isset($_SESSION['loggedin'])) {
+						echo '<button onclick="addToCart(\''.$items['_id'].'\')" type="button" name="cart" id="cart" class="btn btn-block text-white mt-3 cartBtn" value="cart" style="background-color: #ff9900;">Προσθήκη στο καλάθι</button>	';
+					}else{
+						echo '<button type="button" name="cart" id="cart" class="btn btn-block text-white mt-3 cartBtn" value="cart" style="background-color: #ff9900;" data-toggle="modal" data-target="#exampleModal">Προσθήκη στο καλάθι</button>	';
+					}
 					echo '<p id="demo"></p>';
 					echo '<a href="reviews.php?\''.$items['_id'].'\'">Δειτε τα σχολια</a>';
 					echo '				</div>';
